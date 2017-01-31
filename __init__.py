@@ -1,0 +1,3 @@
+from nasaBackground import change_background_image
+
+change_background_image()

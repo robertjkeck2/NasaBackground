@@ -6,18 +6,18 @@ import os
 from appscript import app, mactypes
 
 
-#NASA API Key
-API_KEY = '###'
+#NASA Open API Key
+API_KEY = '### Get your API Key at https://api.nasa.gov/index.html#apply-for-an-api-key ###'
 
 def change_background_image():
 	"""Changes desktop background to NASA POD pulled from API
 
 	Arguments: None
 	
-	Usage: Must begin with a background image from previous day.
-		   Save file in current path and run function to update image.
+	Usage: Currently only works on Macs. Ensure a valid API key is added.
 	"""
 
+	#Calculate current date and yesterday's date
 	now = datetime.now()
 	month = str(now.month)
 	day = str(now.day)
@@ -38,15 +38,17 @@ def change_background_image():
 	yesterday_year = str(yesterday.year)
 	yesterday_timestamp = yesterday_month + yesterday_day + yesterday_year
 
-	path = '/Users/johnkeck/Documents/Code/Python/NASABackground/' 
+	path = os.path.dirname(os.path.realpath(__file__))
 
+	#Pull image url from NASA POD API
 	api_response = requests.get('https://api.nasa.gov/planetary/apod?api_key=' + API_KEY)
 	link = api_response.json()['hdurl']
-	urllib.request.urlretrieve(link, path + timestamp + '.jpg')
+	urllib.request.urlretrieve(link, path + '/' + timestamp + '.jpg')
 
-	app('Finder').desktop_picture.set(mactypes.File(spath + timestamp + '.jpg'))
+	#Change desktop background to NASA image and remove previous image
+	app('Finder').desktop_picture.set(mactypes.File(path + '/' + timestamp + '.jpg'))
 
 	try:
 		os.remove(path + yesterday_timestamp + '.jpg')
 	except:
-		print("Check image files")
+		pass
