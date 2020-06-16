@@ -7,7 +7,7 @@ from appscript import app, mactypes
 
 
 #NASA Open API Key
-API_KEY = '### Get your API Key at https://api.nasa.gov/index.html#apply-for-an-api-key ###'
+API_KEY = 'nazd4vUIi43EvaMhhQJDuaoFbMhQOBtANbIeTd7x'
 
 def change_background_image():
 	"""Changes desktop background to NASA POD pulled from API
